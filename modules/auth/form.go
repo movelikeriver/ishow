@@ -3,6 +3,7 @@ package auth
 import (
 	"strings"
 
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/validation"
 	"github.com/beego/i18n"
 
@@ -40,9 +41,10 @@ func (form *RegisterForm) Valid(v *validation.Validation) {
 		v.SetError("Email", "auth.email_already_taken")
 	}
 
-	if !setting.Captcha.Verify(form.CaptchaId, form.Captcha) {
-		v.SetError("Captcha", "auth.captcha_wrong")
-	}
+// disable it for testing purpose.
+//	if !setting.Captcha.Verify(form.CaptchaId, form.Captcha) {
+//		v.SetError("Captcha", "auth.captcha_wrong")
+//	}
 }
 
 func (form *RegisterForm) Labels() map[string]string {
@@ -201,10 +203,14 @@ func (form *ProfileForm) Valid(v *validation.Validation) {
 }
 
 func (form *ProfileForm) SetFromUser(user *models.User) {
+	beego.Error("(form *ProfileForm) SetFromUser(user *models.User)")
 	utils.SetFormValues(user, form)
 }
 
 func (form *ProfileForm) SaveUserProfile(user *models.User) error {
+	beego.Error("(form *ProfileForm) SaveUserProfile(user *models.User)")
+	beego.Error(user.IsActive)
+
 	// set md5 value if the value is an email
 	if strings.IndexRune(form.GrEmail, '@') != -1 {
 		form.GrEmail = utils.EncodeMd5(form.GrEmail)
@@ -309,7 +315,7 @@ type UserAdminForm struct {
 	Followers   int                     ``
 	Following   int                     ``
 	IsAdmin     bool                    ``
-	IsActive    bool                    `true`
+	IsActive    bool                    ``
 	IsForbid    bool                    ``
 	Lang        int                     `form:"type(select);attr(rel,select2)" valid:""`
 	LangAdds    models.SliceStringField `form:"type(select);attr(rel,select2);attr(multiple,multiple)" valid:""`
@@ -375,6 +381,7 @@ func (form *UserAdminForm) Labels() map[string]string {
 }
 
 func (form *UserAdminForm) SetFromUser(user *models.User) {
+	beego.Error("(form *UserAdminForm) SetFromUser(user *models.User")
 	utils.SetFormValues(user, form)
 }
 

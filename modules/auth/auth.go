@@ -80,6 +80,9 @@ func RegisterUser(user *models.User, username, email, password string) error {
 	// Use username as default nickname.
 	user.NickName = user.UserName
 
+	// Just skip email validation during test phase.
+	user.IsActive = true
+
 	return user.Insert()
 }
 

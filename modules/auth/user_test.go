@@ -10,7 +10,7 @@ import (
 var encoded = "9e2a6b0a670d48bc9fae7f79503a0d7e888650ede413810ff762ae767181fb3e7cdec433d435ed2c671bf4b6ecc49ebae5c7"
 
 func init() {
-	orm.RegisterDataBase("default", "mysql", "root:root@/wetalk?charset=utf8", 30)
+	orm.RegisterDataBase("default", "mysql", "root:root@/ishow?charset=utf8", 30)
 	orm.RunSyncdb("default", true, false)
 }
 
@@ -27,7 +27,7 @@ func TestPasswordVerify(t *testing.T) {
 
 func TestUserVerifyCode(t *testing.T) {
 	user := new(User)
-	user.UserName = "wetalk"
+	user.UserName = "ishow"
 	user.Email = "service@beego.me"
 	user.Password = encoded
 	user.Rands = GetRandomString(10)

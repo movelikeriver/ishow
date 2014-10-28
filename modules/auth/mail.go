@@ -4,8 +4,7 @@ import (
 	"fmt"
 
 	"github.com/beego/i18n"
-
-"github.com/astaxie/beego"
+	"github.com/astaxie/beego"
 
 	"github.com/movelikeriver/ishow/modules/mailer"
 	"github.com/movelikeriver/ishow/modules/models"
@@ -22,8 +21,8 @@ func SendRegisterMail(locale i18n.Locale, user *models.User) {
 	data["Code"] = code
 	body := utils.RenderTemplate("mail/auth/register_success.html", data)
 
-beego.Error("====SendRegisterMail=====")
-beego.Error(body)
+	beego.Error("SendRegisterMail(locale i18n.Locale, user *models.User)")
+	beego.Error(body)
 
 	msg := mailer.NewMailMessage([]string{user.Email}, subject, body)
 	msg.Info = fmt.Sprintf("UID: %d, send register mail", user.Id)
